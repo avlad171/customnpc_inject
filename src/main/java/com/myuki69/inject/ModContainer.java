@@ -15,8 +15,8 @@ public class ModContainer extends DummyModContainer
         ModMetadata meta = getMetadata();
         meta.modId = "inject";
         meta.name = "Inject";
-        meta.description = "Injects functions into net.minecraft.world.World so you can call them using customNPCs with w=world.getMCWorld() and then w.yourfunction(yourparam)";
-        meta.version = "1.0.4";
+        meta.description = "Injects functions into noppes.npcs.scripted.ScriptWorld so you can call them using customNPCs with world.yourfunction(yourparam)";
+        meta.version = "1.0.5";
         meta.authorList = Arrays.asList("Yuki Malagar");
     }
 
