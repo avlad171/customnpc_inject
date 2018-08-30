@@ -16,8 +16,8 @@ public class TransformerClass implements IClassTransformer
 {
 	private static final String[] classesBeingTransformed =
         {
-                "noppes.npcs.scripted.ScriptWorld"
-        		//"net.minecraft.world.World"
+                "noppes.npcs.scripted.ScriptWorld",
+        		//"noppes.npcs.entity.EntityCustomNpc"
         };
 
 	@Override
@@ -35,21 +35,26 @@ public class TransformerClass implements IClassTransformer
         System.out.println(classBeingTransformed);
         try
         {
-        	
-        	ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
-            ClassReader cr = new ClassReader(classBeingTransformed);
-            MyClassVisitor cv = new MyClassVisitor(ASM4, cw);
-            cr.accept(cv, 0);
+        	switch(index)
+        	{
+        	case 0:
+        		ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+        		ClassReader cr = new ClassReader(classBeingTransformed);
+        		MyClassVisitor cv = new MyClassVisitor(ASM4, cw);
+        		cr.accept(cv, 0);
 
 
 
-            //System.out.println("Class should have been transformed and written by now!");
+        		//System.out.println("Class should have been transformed and written by now!");
             
-            //FileOutputStream out = new FileOutputStream("modified.class");
-    		//out.write(cw.toByteArray());
-    		//out.close();
+        		//FileOutputStream out = new FileOutputStream("modified.class");
+        		//out.write(cw.toByteArray());
+        		//out.close();
     		
-            return cw.toByteArray();
+        		return cw.toByteArray();
+        	case 1:
+
+        	}
         }
         catch (Exception e)
         {

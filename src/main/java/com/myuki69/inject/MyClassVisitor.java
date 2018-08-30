@@ -34,46 +34,56 @@ public class MyClassVisitor extends ClassVisitor
 	@Override
 	public void visitEnd() 
 	{
-		MethodVisitor inject;
-		inject = cv.visitMethod(ACC_PUBLIC, "target", "(Lnet/minecraft/entity/EntityLivingBase;)V", null, null);
-		inject.visitCode();
+		MethodVisitor laser; //LaserProjectile(EntityLivingBase shooter, float damage, float spread, int dmgDropStart, int dmgDropEnd, float dmgMin, float penetration, boolean doblockdamage)
+		laser = cv.visitMethod(ACC_PUBLIC, "shootLaser", "(Lnet/minecraft/entity/EntityLivingBase;FFIIFFZ)V", null, null);
+		laser.visitCode();
 		Label l0 = new Label();
-		inject.visitLabel(l0);
-		//inject.visitLineNumber(78, l0);
-		inject.visitVarInsn(ALOAD, 1);
-		inject.visitFieldInsn(GETFIELD, "net/minecraft/entity/EntityLivingBase", "field_70170_p", "Lnet/minecraft/world/World;");
-		inject.visitVarInsn(ASTORE, 2);
+		laser.visitLabel(l0);
+		//laser.visitLineNumber(30, l0);
+		laser.visitVarInsn(ALOAD, 1);
+		laser.visitFieldInsn(GETFIELD, "net/minecraft/entity/EntityLivingBase", "field_70170_p", "Lnet/minecraft/world/World;");	//field_70170_p = worldObj
+		laser.visitVarInsn(ASTORE, 9);
 		Label l1 = new Label();
-		inject.visitLabel(l1);
-		//inject.visitLineNumber(81, l1);
-		inject.visitVarInsn(ALOAD, 2);
-		inject.visitTypeInsn(NEW, "techguns/entities/projectiles/LaserProjectile");
-		inject.visitInsn(DUP);
-		inject.visitVarInsn(ALOAD, 2);
-		inject.visitVarInsn(ALOAD, 1);
-		inject.visitLdcInsn(new Float("40.0"));
-		inject.visitLdcInsn(new Float("100.0"));
-		inject.visitIntInsn(SIPUSH, 10);
-		inject.visitLdcInsn(new Float("0.5"));
-		inject.visitIntInsn(SIPUSH, 40);
-		inject.visitIntInsn(SIPUSH, 140);
-		inject.visitLdcInsn(new Float("8.0"));
-		inject.visitLdcInsn(new Float("10.0"));
-		inject.visitInsn(ICONST_0);
-		inject.visitMethodInsn(INVOKESPECIAL, "techguns/entities/projectiles/LaserProjectile", "<init>", "(Lnet/minecraft/world/World;Lnet/minecraft/entity/EntityLivingBase;FFIFIIFFZ)V", false);
-		inject.visitMethodInsn(INVOKEVIRTUAL, "net/minecraft/world/World", "func_72838_d", "(Lnet/minecraft/entity/Entity;)Z", false);
-		inject.visitInsn(POP);
+		laser.visitLabel(l1);
+		//laser.visitLineNumber(31, l1);
+		laser.visitVarInsn(ALOAD, 9);
+		laser.visitTypeInsn(NEW, "techguns/entities/projectiles/LaserProjectile");
+		laser.visitInsn(DUP);
+		laser.visitVarInsn(ALOAD, 9);
+		laser.visitVarInsn(ALOAD, 1);
+		laser.visitVarInsn(FLOAD, 2);
+		laser.visitLdcInsn(new Float("100.0"));
+		laser.visitIntInsn(BIPUSH, 10);
+		laser.visitVarInsn(FLOAD, 3);
+		laser.visitVarInsn(ILOAD, 4);
+		laser.visitVarInsn(ILOAD, 5);
+		laser.visitVarInsn(FLOAD, 6);
+		laser.visitVarInsn(FLOAD, 7);
+		laser.visitVarInsn(ILOAD, 8);
+		laser.visitMethodInsn(INVOKESPECIAL, "techguns/entities/projectiles/LaserProjectile", "<init>", "(Lnet/minecraft/world/World;Lnet/minecraft/entity/EntityLivingBase;FFIFIIFFZ)V", false);
+		laser.visitMethodInsn(INVOKEVIRTUAL, "net/minecraft/world/World", "func_72838_d", "(Lnet/minecraft/entity/Entity;)Z", false); //func_72838_d = SpawnEntityInWorld
+		laser.visitInsn(POP);
 		Label l2 = new Label();
-		inject.visitLabel(l2);
-		//inject.visitLineNumber(83, l2);
-		inject.visitInsn(RETURN);
+		laser.visitLabel(l2);
+		//laser.visitLineNumber(32, l2);
+		laser.visitInsn(RETURN);
 		Label l3 = new Label();
-		inject.visitLabel(l3);
-		inject.visitLocalVariable("this", "Lcom/myuki69/inject/ScriptLivingBase;", null, l0, l3, 0);
-		inject.visitLocalVariable("cur", "Lnet/minecraft/entity/EntityLivingBase;", null, l0, l3, 1);
-		inject.visitLocalVariable("thisworld", "Lnet/minecraft/world/World;", null, l1, l3, 2);
-		inject.visitMaxs(14, 3);
-		inject.visitEnd();
+		laser.visitLabel(l3);
+		laser.visitLocalVariable("this", "Ltechguns/entities/projectiles/Lasergun;", null, l0, l3, 0);
+		laser.visitLocalVariable("shooter", "Lnet/minecraft/entity/EntityLivingBase;", null, l0, l3, 1);
+		laser.visitLocalVariable("damage", "F", null, l0, l3, 2);
+		laser.visitLocalVariable("spread", "F", null, l0, l3, 3);
+		laser.visitLocalVariable("dmgDropStart", "I", null, l0, l3, 4);
+		laser.visitLocalVariable("dmgDropEnd", "I", null, l0, l3, 5);
+		laser.visitLocalVariable("dmgMin", "F", null, l0, l3, 6);
+		laser.visitLocalVariable("penetration", "F", null, l0, l3, 7);
+		laser.visitLocalVariable("doblockdamage", "Z", null, l0, l3, 8);
+		laser.visitLocalVariable("world", "Lnet/minecraft/world/World;", null, l1, l3, 9);
+		laser.visitMaxs(14, 10);
+		laser.visitEnd();
+
+
+			
 		
 		MethodVisitor tesla;	//public void spawnProjectile(EntityLivingBase shooter, float damage, int damageDropStart, int damageDropEnd, float damageMin, float penetration, int chain, float chainDmgDrop)
 		tesla =  cv.visitMethod(ACC_PUBLIC, "shootTesla", "(Lnet/minecraft/entity/EntityLivingBase;FIIFFIF)V", null, null);
@@ -134,5 +144,6 @@ public class MyClassVisitor extends ClassVisitor
 		tesla.visitEnd();
 		
 		cv.visitEnd();
+		
 	}
 }
